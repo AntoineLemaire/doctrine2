@@ -412,6 +412,15 @@ class UnitOfWork implements PropertyChangedListener
             $this->em->close();
             $conn->rollback();
 
+            try {
+                $now = new \DateTime();
+                $date = $now->format('r');
+                $eol = PHP_EOL.'==========================================================================================================='.PHP_EOL;
+                file_put_contents(__DIR__.'/../../../../../../entity_manager_close_logs.txt', $date.PHP_EOL.PHP_EOL.$e->getMessage().$eol, FILE_APPEND | LOCK_EX);
+            } catch (\Exception $exc) {
+                //Do nothing
+            }
+
             $this->afterTransactionRolledBack();
 
             throw $e;
