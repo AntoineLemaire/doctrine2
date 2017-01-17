@@ -416,7 +416,7 @@ class UnitOfWork implements PropertyChangedListener
                 $now = new \DateTime();
                 $date = $now->format('r');
                 $eol = PHP_EOL.'==========================================================================================================='.PHP_EOL;
-                file_put_contents(__DIR__.'/../../../../../../entity_manager_close_logs.txt', $date.PHP_EOL.PHP_EOL.$e->getMessage().$eol, FILE_APPEND | LOCK_EX);
+                file_put_contents(__DIR__.'/../../../../../../entity_manager_close_logs.txt', $date.' : '.get_class($e).PHP_EOL.PHP_EOL.$e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL.$eol, FILE_APPEND | LOCK_EX);
             } catch (\Exception $exc) {
                 //Do nothing
             }
